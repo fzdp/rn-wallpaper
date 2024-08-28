@@ -1,27 +1,34 @@
-import { EvilIcons, Ionicons, Feather } from '@expo/vector-icons';
+import {
+  EvilIcons,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
+import { DrawerActions } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
 import { debounce } from 'lodash';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   ActivityIndicator,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TextInput,
   View,
+  Text,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import CategoryList from '../../components/category_list';
-import ImageGrid from '../../components/image_grid';
-import { ImageOrientation, OrderParam } from '../../constants/app';
-import { theme } from '../../constants/theme';
-import { fetchImages } from '../../lib/api';
+import CategoryList from '@/components/category_list';
+import ImageGrid from '@/components/image-grid';
+import { ImageOrientation, OrderParam } from '@/constants/app';
+import { theme } from '@/constants/theme';
+import { fetchImages } from '@/lib/api';
 
 let currentPage = 1;
 
 const HomeScreen = () => {
   const [query, setQuery] = useState('');
+  const navigation = useNavigation();
   const [orientation, setOrientation] = useState(ImageOrientation.all);
   const [order, setOrder] = useState(OrderParam.latest);
   const [isLoading, setIsLoading] = useState(false);
@@ -98,18 +105,25 @@ const HomeScreen = () => {
     });
   };
 
-  const onPressHeaderIcon = () => {
+  const onPressHeaderTitle = () => {
     scrollTop();
   };
 
+  const toggleDrawer = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: 10 }]}>
+    <View style={styles.container}>
       <View style={styles.header}>
-        <Pressable onPress={onPressHeaderIcon}>
-          <Feather name="sun" size={26} color="black" />
+        <Pressable onPress={toggleDrawer}>
+          <MaterialCommunityIcons name="menu" size={24} />
+        </Pressable>
+        <Pressable onPress={onPressHeaderTitle}>
+          <Text style={{ fontSize: 20 }}>首页</Text>
         </Pressable>
         <Pressable>
-          <Ionicons name="filter" size={24} color={theme.colors.neutral(0.7)} />
+          <Ionicons name="filter" size={24} />
         </Pressable>
       </View>
 
@@ -150,10 +164,12 @@ const HomeScreen = () => {
             { marginTop: images.length > 0 ? 10 : 70 },
           ]}
         >
-          {!isEmptyData && <ActivityIndicator size="large" />}
+          {!isEmptyData && (
+            <ActivityIndicator size="large" color={theme.colors.loading} />
+          )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -165,10 +181,12 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   header: {
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: theme.colors.statusBar,
   },
   headerTitle: {
     fontSize: 26,

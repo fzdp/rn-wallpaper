@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import Animated, { FadeInRight } from 'react-native-reanimated';
 
-import { CATEGORIES } from '../constants/app';
-import { theme } from '../constants/theme';
+import { CATEGORIES } from '@/constants/app';
+import { theme } from '@/constants/theme';
 
 const CategoryList = ({ selectedCategory, onSelectCategory }) => {
   return (
@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
   categoryItem: {
     backgroundColor: theme.colors.white,
     borderWidth: 1,
-    borderColor: theme.colors.neutral(0.8),
+    borderColor: theme.colors.statusBar,
     borderRadius: theme.radius.md,
     paddingVertical: 4,
     paddingHorizontal: 10,
   },
   activeCategoryItem: {
-    backgroundColor: theme.colors.neutral(0.8),
+    backgroundColor: theme.colors.statusBar,
   },
   categoryText: {
     fontWeight: theme.fontWeight.bold,

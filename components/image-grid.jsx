@@ -10,10 +10,13 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { ImageOrientation } from '../constants/app';
-import { getImageHeight } from '../lib/common';
+import { ImageOrientation } from '@/constants/app';
+import { getImageHeight } from '@/lib/common';
 
-const ImageGrid = ({ images, imageOrientation }) => {
+const ImageGrid = ({
+  images,
+  imageOrientation = ImageOrientation.vertical,
+}) => {
   const estimatedItemHeight = (orientation) => {
     switch (orientation) {
       case ImageOrientation.all:
@@ -48,7 +51,7 @@ const ImageGridItem = memo(
         style={styles.imageItem}
         onPress={() => {
           router.push({
-            pathname: 'screens/image-detail-screen',
+            pathname: 'image-detail',
             params: image,
           });
         }}

@@ -5,20 +5,20 @@ import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import { theme } from '../constants/theme';
+import { theme } from '@/constants/theme';
 
 const WelcomeScreen = () => {
   const router = useRouter();
 
   const goHome = () => {
-    router.replace('screens/home-screen');
+    router.replace('home');
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
       <Image
-        source={require('../assets/images/splash-screen.jpg')}
+        source={require('@/assets/images/splash-screen.jpg')}
         style={styles.imageBg}
         resizeMode="cover"
       />
